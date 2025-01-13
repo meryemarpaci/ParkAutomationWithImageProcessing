@@ -1,2 +1,0 @@
-using OpenCvSharp;
-using Tesseract;
