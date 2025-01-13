@@ -1,0 +1,11 @@
+opencv-python==4.5.5.64        # OpenCV temel kütüphanesi
+opencv-contrib-python==4.5.5.64  # OpenCV'nin genişletilmiş özellikleri
+pytesseract==0.3.10           # Tesseract OCR Python Wrapper
+numpy==1.22.3                 # Sayısal işlemler için gerekli
+Pillow==9.1.1                 # Görüntü işlemleri için
+
+# JSON Veri İşleme
+jsonschema==4.4.0             # JSON doğrulama ve işleme
+
+# MSSQL Bağlantısı
+pyodbc==4.0.32                # Python ile MSSQL bağlantısı
