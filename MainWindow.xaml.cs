@@ -410,6 +410,14 @@ namespace VeriTabaniProjesi
 
 
 
+        private bool PlakaFormatKontrol(string plaka)
+        {
+            // Türkiye plaka formatı: 
+            // 1-2 rakam + 1-3 harf + 1-4 rakam veya 1-2 rakam + 1-3 harf + 1-3 rakam + harf
+            string pattern = @"^(0[1-9]|[1-9][0-9])[A-Z]{1,3}([0-9]{1,4}|[0-9]{1,3}[A-Z])$";
+            return System.Text.RegularExpressions.Regex.IsMatch(plaka.ToUpper().Trim(), pattern);
+        }
+
         private void InsertAracGirisCikis(string plaka)
         {
             try
@@ -424,11 +432,44 @@ namespace VeriTabaniProjesi
                     }
                 }
 
+                // Plaka formatı kontrolü
+                plaka = plaka.ToUpper().Trim(); // Plakayı büyük harfe çevir ve boşlukları temizle
+                if (!PlakaFormatKontrol(plaka))
+                {
+                    MessageBox.Show("Geçersiz plaka formatı! Lütfen geçerli bir plaka giriniz.\n" +
+                                  "Örnek formatlar:\n" +
+                                  "34ABC123\n" +
+                                  "34AB1234\n" +
+                                  "34A1234\n" +
+                                  "34ABC12D", 
+                                  "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 int aracID = -1;
                 bool yetkiliArac = false;
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
+
+                    // Önce aracın içeride olup olmadığını kontrol et
+                    string checkInsideQuery = @"
+                        SELECT COUNT(1) 
+                        FROM AracGirisCikis 
+                        WHERE Plaka = @Plaka 
+                        AND CikisTarihi IS NULL 
+                        AND Durum = 'GirisYapildi'";
+
+                    SqlCommand checkInsideCmd = new SqlCommand(checkInsideQuery, connection);
+                    checkInsideCmd.Parameters.AddWithValue("@Plaka", plaka);
+                    
+                    int icerdekiAracSayisi = Convert.ToInt32(checkInsideCmd.ExecuteScalar());
+                    
+                    if (icerdekiAracSayisi > 0)
+                    {
+                        MessageBox.Show($"{plaka} plakalı araç zaten içeride!", "Uyarı", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
                     
                     // Önce plakayı Arac tablosunda kontrol et
                     string checkQuery = "SELECT AracID FROM Arac WHERE Plaka = @Plaka";
