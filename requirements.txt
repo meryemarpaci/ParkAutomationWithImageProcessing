@@ -1,4 +1,4 @@
-opencv-python==4.5.5.64        # OpenCV temel kütüphanesi
+opencv-python==4.8.1.78        # OpenCV temel kütüphanesi
 opencv-contrib-python==4.5.5.64  # OpenCV'nin genişletilmiş özellikleri
 pytesseract==0.3.10           # Tesseract OCR Python Wrapper
 numpy==1.22.3                 # Sayısal işlemler için gerekli
