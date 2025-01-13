@@ -10,7 +10,6 @@
         FontSize="14">
 
     <Window.Resources>
-        
         <!-- 1) GÖLGE EFEKTİ -->
         <DropShadowEffect x:Key="DefaultShadowEffect" 
                           BlurRadius="10" 
@@ -334,10 +333,7 @@
                         <TextBlock Text="Araç Listesi" FontSize="14"/>
                     </StackPanel>
                 </Button>
-
-
-
-                
+    
             </StackPanel>
         </Border>
 
@@ -386,7 +382,6 @@
                             <DataGridTextColumn Header="İçerideki Araç Sayısı" Binding="{Binding IceridekiArac}" Width="150"/>
                             <DataGridTextColumn Header="Boş Alan" Binding="{Binding BosAlan}" Width="100"/>
                             <DataGridTextColumn Header="Saatlik Ücret" Binding="{Binding SaatlikÜcret}" Width="100"/>
-
                         </DataGrid.Columns>
                     </DataGrid>
 
